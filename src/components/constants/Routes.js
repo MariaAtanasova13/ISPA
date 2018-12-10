@@ -1,0 +1,11 @@
+export const HOME = '/';
+export const MENU = '/menu';
+export const USERS = '/userAction';
+export const BUSSEATS = '/busseats';
+export const SHOP = '/shop';
+export const ACCOUNT = '/account';
+export const SIGN_UP = '/SignUp';
+export const PASSWORD_FORGET = '/passwordForget';
+export const PASSWORD_CHANGE = '/passwordChange';
+export const GENERAL_CONDITIONS='/GeneralCondition';
+export const USER= '/user';

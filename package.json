@@ -1,0 +1,48 @@
+{
+  "name": "singlepageapp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@blueprintjs/core": "^1.35.7",
+    "bootstrap": "^3.3.7",
+    "create-react-context": "^0.2.2",
+    "danger": "^3.2.0",
+    "firebase": "^4.13.1",
+    "google-map-react": "^1.0.5",
+    "html-minifier": "^3.5.11",
+    "html-minifier-loader": "^1.4.1",
+    "material-ui": "^0.20.0",
+    "mkp-react-native-button": "^1.0.1",
+    "re-base": "^3.2.2",
+    "react": "^16.3.1",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-bootstrap-table": "^4.3.1",
+    "react-dom": "^16.3.1",
+    "react-facebook": "^4.2.1",
+    "react-flip-page": "^0.15.0",
+    "react-google-map": "^3.1.1",
+    "react-google-maps": "^9.4.5",
+    "react-lifecycle-hoc": "^3.1.0",
+    "react-native-image-button": "^1.0.0",
+    "react-navbar": "^1.1.1",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "0.9.5",
+    "react-transition-group": "^1.2.1",
+    "toaster": "^0.1.2",
+    "turn-js": "^0.5.4",
+    "victory": "^0.25.4",
+    "webpack-config": "^7.5.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.9",
+    "html-loader": "^0.5.5",
+    "style-loader": "^0.20.2",
+    "webpack-cli": "^2.0.12"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

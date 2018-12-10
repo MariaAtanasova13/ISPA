@@ -1,0 +1,10 @@
+
+body {
+    background-image: url("blue-dark.jpg");
+    background-size:cover;
+}
+
+.cart-input {
+    padding:15px;
+}
+
