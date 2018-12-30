@@ -30,6 +30,8 @@ class Home extends Component {
         this.setState({
             loginscreen:loginscreen,
         })
+
+
     }
     render() {
         return (

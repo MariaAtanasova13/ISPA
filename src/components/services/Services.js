@@ -13,9 +13,16 @@ class Services extends Component{
     render(){
         return(
             <div className="containerf">
-
-
-
+                <h1>Услуги</h1>
+                <table>
+                    <tr>
+                        <th id="myTh">Name</th>
+                    </tr>
+                    <tr>
+                        <td>John</td>
+                        <td>John</td>
+                    </tr>
+                </table>
 
            </div>
         );

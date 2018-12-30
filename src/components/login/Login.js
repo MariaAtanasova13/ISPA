@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter, } from 'react-router-dom';
 import{ Redirect} from 'react-router-dom'
 import { Toaster, Intent} from '@blueprintjs/core'
-import { auth } from '../../firebase';
+import {auth, firebase} from '../../firebase';
 import * as Routes from '../constants/Routes';
 
 
@@ -42,9 +42,15 @@ class Login extends Component {
         } = this.props;
 
         auth.doSignInWithEmailAndPassword(email, password)
-            .then(() => {
+            .then((result) => {
                 this.setState(() => ({ ...INITIAL_STATE }));
-                history.push(Routes.HOME);
+
+
+                let afterLogin = Routes.HOME;
+                if(result.email === 'admin@abv.bg'){
+                    afterLogin = Routes.ADMIN
+                }
+                history.push(afterLogin);
             })
             .catch(error => {
                 this.setState(byPropKey('error', error));
@@ -52,6 +58,8 @@ class Login extends Component {
 
         event.preventDefault();
     }
+
+
 
     render() {
 

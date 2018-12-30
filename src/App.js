@@ -13,6 +13,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Adminform from "./components/login/Adminform";
 import { componentDidMount } from 'react-lifecycle-hoc';
 import { firebase } from './firebase';
+import Homep from './components/login/Homep';
 
 
 
@@ -48,6 +49,11 @@ const routes = [
     path:'/admin',
     exact:true,
     middle: () => <Admin/>
+    },
+    {
+        path:'/homep',
+        exact:true,
+        middle: () => <Homep/>
     },
     {
     path:'/adminform',
@@ -127,6 +133,8 @@ class App extends Component {
                                     />
                                 )}
                             </div>
+
+
                         </div>
                     </div>
 

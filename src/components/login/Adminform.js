@@ -12,8 +12,7 @@ import { componentDidMount } from 'react-lifecycle-hoc';
 import * as Routes from "../constants/Routes";
 import Shop from "../shop/Shop";
 import _firebase from "firebase";
-
-
+import  {Redirect} from 'react-router-dom';
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -21,6 +20,11 @@ const byPropKey = (propertyName, value) => () => ({
 
 class Adminform extends Component{
 
+isAuthenticated(){
+    const token = firebase.auth().currentUser;
+    return token;
+    console.log(" token: " + token);
+}
     //Add elements
 
     constructor(props) {
@@ -47,6 +51,7 @@ class Adminform extends Component{
 
 
     }
+
     handleNameChange(event) {
         this.setState({name: event.target.value,});
     }
@@ -159,16 +164,10 @@ class Adminform extends Component{
 
         })
 
-
-
-
     }
 
-
-
-
     render(){
-
+const isAlreadyAuthenticated = this.isAuthenticated();
         if (this.props.loading) {
             return (
                 <div>
@@ -179,34 +178,36 @@ class Adminform extends Component{
 
         return(
             <div className="containerf" >
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Име:
-                        <input type="text" value={this.state.name} onChange={this.handleNameChange.bind(this)} />
-                    </label>
-                    <label>
-                        Снимка:
-                        <input type="text" value={this.state.imge} onChange={this.handleImgChange.bind(this)} />
-                    </label>
-                    <label className="descriptstile">
-                        Описание:
-                        <input type="text" value={this.state.description} onChange={this.handleDescChange.bind(this)} />
-                    </label>
-                    <label>
-                        Цена:
-                        <input type="text" value={this.state.price} onChange={this.handlePriceChange.bind(this)} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
-                <div className="containerf" >
-                    <div>
-                        {this.props.children && React.cloneElement(this.props.children,{
-                        firebaseRef: firebase.database().ref().child('television'),
-                        television: this.state.television,
-                        loading: this.state.loading
-                    })}
+                {!isAlreadyAuthenticated ? <Redirect to = {{pathname: '/admin'}}/> : ( <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            Име:
+                            <input type="text" value={this.state.name} onChange={this.handleNameChange.bind(this)} />
+                        </label>
+                        <label>
+                            Снимка:
+                            <input type="text" value={this.state.imge} onChange={this.handleImgChange.bind(this)} />
+                        </label>
+                        <label className="descriptstile">
+                            Описание:
+                            <input type="text" value={this.state.description} onChange={this.handleDescChange.bind(this)} />
+                        </label>
+                        <label>
+                            Цена:
+                            <input type="text" value={this.state.price} onChange={this.handlePriceChange.bind(this)} />
+                        </label>
+                        <input type="submit" value="Submit" />
+                    </form>
+                    <div className="containerf" >
+                        <div>
+                            {this.props.children && React.cloneElement(this.props.children,{
+                                firebaseRef: firebase.database().ref().child('television'),
+                                television: this.state.television,
+                                loading: this.state.loading
+                            })}
+                        </div>
                     </div>
-                </div>
+                </div> )}
 
 
             </div>
@@ -214,5 +215,5 @@ class Adminform extends Component{
     }
 
 }
-
+const condition = authUser => authUser != null;
 export default Adminform;
