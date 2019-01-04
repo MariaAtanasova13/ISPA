@@ -5,7 +5,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { Paper,Tabs,Tab } from 'material-ui';
 import {auth, db} from '../../firebase';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import index from './index';
 import * as firebase from 'firebase';
 import { componentDidMount } from 'react-lifecycle-hoc';
@@ -13,6 +12,9 @@ import * as Routes from "../constants/Routes";
 import Shop from "../shop/Shop";
 import _firebase from "firebase";
 import  {Redirect} from 'react-router-dom';
+import {storage} from "../../firebase/firebase";
+
+
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -20,8 +22,8 @@ const byPropKey = (propertyName, value) => () => ({
 
 class Adminform extends Component{
 
-isAuthenticated(){
-    const token = firebase.auth().currentUser;
+isAuthenticated(){                              //authorization firebase.auth().currentUser.email
+    const token = localStorage.getItem('authToken_');
     return token;
     console.log(" token: " + token);
 }
@@ -32,7 +34,8 @@ isAuthenticated(){
         this.state = {
             name: '',
             description: '',
-            imge: '',
+            imge: null,
+            url: '',
             price:'',
             nameArr: [],
             img: [],
@@ -44,12 +47,9 @@ isAuthenticated(){
             messages: []
         };
 
-
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
-
-
+        this.handleUpload = this.handleUpload.bind(this);
     }
 
     handleNameChange(event) {
@@ -60,8 +60,30 @@ isAuthenticated(){
         this.setState({description: event.target.value,});
     }
 
-    handleImgChange(event) {
-        this.setState({imge: event.target.value,});
+    handleImgChange = e => {
+        if(e.target.files[0]){
+        const imge = e.target.files[0];
+        this.setState(() => ({imge}));
+
+         }
+    }
+
+
+    handleUpload = () => {
+    const {imge} = this.state;
+    const uploadTask = storage.ref('images/'+ imge.name).put(imge);
+    uploadTask.on('state_changed',
+        (snapshot)=>{
+        },
+        (error)=>{
+        console.log(error);
+        },
+        () =>{
+        storage.ref('images').child(imge.name).getDownloadURL().then(url =>{
+         console.log(url);
+            })
+
+        });
     }
 
     handlePriceChange(event){
@@ -75,11 +97,26 @@ isAuthenticated(){
         var data ={
             name:this.state.name,
             description:this.state.description,
-            img:this.state.imge,
             price:this.state.price,
+            img:this.state.imge,
         }
+
         post.push(data);
         event.preventDefault()
+        const {imge} = this.state;
+        const uploadTask = storage.ref('images/').child(imge.name).put(imge);
+        uploadTask.on('state_changed',
+            (snapshot)=>{
+            },
+            (error)=>{
+                console.log(error);
+            },
+            () =>{
+                storage.ref('images').child(imge.name).getDownloadURL().then(url =>{
+                    console.log(url);
+                })
+
+            });
     }
 
 
@@ -126,11 +163,8 @@ isAuthenticated(){
                     <button className="buttonl" type='submit' onClick={  console.log(" key: " + this.state.id)}>
                         <div className="centered">Delete</div>
                     </button>
-
                 </form>
-
             );
-
             this.setState({
                 post: postList
             });
@@ -167,7 +201,9 @@ isAuthenticated(){
     }
 
     render(){
-const isAlreadyAuthenticated = this.isAuthenticated();
+       const isAlreadyAuthenticated = this.isAuthenticated(); //authorization
+
+        console.log(" token: " + isAlreadyAuthenticated);
         if (this.props.loading) {
             return (
                 <div>
@@ -176,9 +212,10 @@ const isAlreadyAuthenticated = this.isAuthenticated();
             );
         }
 
+
         return(
-            <div className="containerf" >
-                {!isAlreadyAuthenticated ? <Redirect to = {{pathname: '/admin'}}/> : ( <div>
+            <div className="containershop" >
+                {isAlreadyAuthenticated ? <Redirect to = {{pathname: '/admin'}}/> : ( <div>
                     <form onSubmit={this.handleSubmit}>
                         <label>
                             Име:
@@ -186,7 +223,7 @@ const isAlreadyAuthenticated = this.isAuthenticated();
                         </label>
                         <label>
                             Снимка:
-                            <input type="text" value={this.state.imge} onChange={this.handleImgChange.bind(this)} />
+                            <input type="file"   onChange={this.handleImgChange.bind(this)} />
                         </label>
                         <label className="descriptstile">
                             Описание:
@@ -215,5 +252,4 @@ const isAlreadyAuthenticated = this.isAuthenticated();
     }
 
 }
-const condition = authUser => authUser != null;
 export default Adminform;

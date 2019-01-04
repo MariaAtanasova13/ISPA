@@ -29,7 +29,7 @@ class Contact extends Component {
         return(
                 <div>
                     <div className="row">
-                        <div className="containerf">
+                        <div className="containercontact">
                         <h2 class="textcenter">Контакти</h2>
                         <section id="contactOrder">
                             <div class="container">

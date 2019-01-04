@@ -75,7 +75,7 @@ class Shop extends Component{
     render(){
 
         return(
-            <div className="containerf" >
+            <div className="containershop" >
                 <ul>{this.state.post}</ul>
             </div>
         );

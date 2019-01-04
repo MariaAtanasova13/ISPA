@@ -60,7 +60,6 @@ const routes = [
     exact:true,
     middle: () => <Adminform/>
     }
-
 ]
 
 
@@ -133,8 +132,6 @@ class App extends Component {
                                     />
                                 )}
                             </div>
-
-
                         </div>
                     </div>
 
