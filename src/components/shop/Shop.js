@@ -1,15 +1,15 @@
-import React,{Component} from "react";
+import React, {Component} from "react";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import { Link } from 'react-router-dom';
-import { Paper,Tabs,Tab } from 'material-ui';
-import { db } from '../../firebase';
+import {Link} from 'react-router-dom';
+import {Paper, Tabs, Tab} from 'material-ui';
+import {db} from '../../firebase';
 import * as firebase from 'firebase';
-import { componentDidMount } from 'react-lifecycle-hoc';
+import {componentDidMount} from 'react-lifecycle-hoc';
 
 
-class Shop extends Component{
+class Shop extends Component {
 
 
     constructor() {
@@ -19,10 +19,10 @@ class Shop extends Component{
         this.state = {
             name: [],
             img: [],
-            price:[],
-            description:[],
-            id:[],
-            television:'',
+            price: [],
+            description: [],
+            id: [],
+            television: '',
         };
     }
 
@@ -42,7 +42,7 @@ class Shop extends Component{
                 });
 
                 const postList = this.state.id.map((dataList, index) =>
-                    <form >
+                    <form>
                         <div className='row'>
                             <div class="col-md-4 col-lg-4">
                                 <h1>{this.state.name[index]}</h1>
@@ -50,18 +50,16 @@ class Shop extends Component{
                         </div>
                         <div className='row'>
                             <div class="col-md-4 col-lg-4">
-                                <img src={this.state.img[index]} height={200} />
+                                <img src={this.state.img[index]} height={200}/>
                             </div>
                             <div class="col-md-8 col-lg-8">
-                                <br />
-                                {this.state.description[index]}
-                                <br />
+
+                                <textarea className="textboxshop">{this.state.description[index]}</textarea>
+                                <br/>
                                 <h3>{this.state.price[index]}</h3>
                             </div>
                         </div>
-
                     </form>
-
                 );
 
                 this.setState({
@@ -72,10 +70,10 @@ class Shop extends Component{
     }
 
 
-    render(){
+    render() {
 
-        return(
-            <div className="containershop" >
+        return (
+            <div className="containershop">
                 <ul>{this.state.post}</ul>
             </div>
         );
